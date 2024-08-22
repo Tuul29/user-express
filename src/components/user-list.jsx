@@ -10,7 +10,33 @@ const UserList = () => {
     const { users } = await res.json();
     setUsers(users);
   };
-
+  const createEmployee = async () => {
+    const res = await fetch("http://localhost:8000/users", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        firstname: "Нарантунгалаг",
+        lastname: "Даваа",
+        email: "naraa@gmail.com",
+        position: "Хөгжүүлэгч",
+        profileImg: "https://img.daisyui.com/images/profile/demo/2@94.webp",
+      }),
+    });
+    const { user } = await res.json();
+    console.log("AE", user);
+    setUsers([...users, user]);
+  };
+  const deleteEmployee = async () => {
+    const res = await fetch("http://localhost:8000/users", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({}),
+    });
+  };
   useEffect(() => {
     getEmployeesData();
   }, []);
@@ -25,6 +51,9 @@ const UserList = () => {
           ))}
         </tbody>
       </table>
+      <button className="btn btn-info btn-outline" onClick={createEmployee}>
+        Ажилтан нэмэх
+      </button>
     </div>
   );
 };
